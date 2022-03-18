@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,10 +34,12 @@ public class Player implements Serializable {
     }
 
     public List<Integer> getTaskList() {
-        String[] convertedRankArray = taskList.split(",");
         List<Integer> list = new ArrayList<>();
-        for (String number : convertedRankArray) {
-            list.add(Integer.parseInt(number.trim()));
+        if (!taskList.equals("")) {
+            String[] convertedRankArray = taskList.split(",");
+            for (String number : convertedRankArray) {
+                list.add(Integer.parseInt(number.trim()));
+            }
         }
         return list;
     }
