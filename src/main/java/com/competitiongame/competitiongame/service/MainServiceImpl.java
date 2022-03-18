@@ -1,6 +1,11 @@
 package com.competitiongame.competitiongame.service;
 
+import com.competitiongame.competitiongame.entities.Player;
+import com.competitiongame.competitiongame.entities.Task;
+import com.competitiongame.competitiongame.repositories.PlayerRepository;
+import com.competitiongame.competitiongame.repositories.TaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +22,15 @@ public class MainServiceImpl implements MainService {
 
     @Value("${spring.datasource.clientId}")
     private String clientId;
+
     @Value("${spring.datasource.clientSecret}")
     private String clientSecret;
+
+    @Autowired
+    PlayerRepository playerRepository;
+
+    @Autowired
+    TaskRepository taskRepository;
 
     public Map<String,Object> onlineEditor(String script) throws IOException {
             System.out.println(clientId);
@@ -60,5 +72,32 @@ public class MainServiceImpl implements MainService {
             }
             connection.disconnect();
             return map;
+    }
+
+    @Override
+    public Iterable<Task> getTaskList() {
+        return taskRepository.findAll();
+    }
+
+    @Override
+    public Iterable<Player> getPlayerList() {
+        return playerRepository.findAll();
+    }
+
+    @Override
+    public Player createPerson(String name, String selectedTaskId) {
+        Player player = playerRepository.checkExist(name);
+        if (player == null) {
+            Player player1 = new Player();
+            player1.setPlayerName(name);
+            player1.setTaskList(selectedTaskId);
+            playerRepository.save(player1);
+            return player1;
+        } else {
+            Player player1 = playerRepository.checkExist(name);
+            player1.setTaskList(selectedTaskId);
+            playerRepository.save(player1);
+            return player1;
+        }
     }
 }
