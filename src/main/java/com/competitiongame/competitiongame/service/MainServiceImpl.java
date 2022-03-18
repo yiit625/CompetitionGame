@@ -17,19 +17,11 @@ public class MainServiceImpl implements MainService {
     private String clientId;
     @Value("${spring.datasource.clientSecret}")
     private String clientSecret;
-    @Value("${spring.datasource.script}")
-    private String script;
-    @Value("${spring.datasource.language}")
-    private String language;
-    @Value("${spring.datasource.versionIndex}")
-    private String versionIndex;
 
-    public void onlineEditor() throws IOException {
+    public void onlineEditor(String script) throws IOException {
             System.out.println(clientId);
             System.out.println(clientSecret);
             System.out.println(script);
-            System.out.println(language);
-            System.out.println(versionIndex);
 
             URL url = new URL("https://api.jdoodle.com/v1/execute");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -37,8 +29,9 @@ public class MainServiceImpl implements MainService {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
 
-            String input = "{\"clientId\": \"" + clientId + "\",\"clientSecret\":\"" + clientSecret + "\",\"script\":\"" + script +
-                    "\",\"language\":\"" + language + "\",\"versionIndex\":\"" + versionIndex + "\"} ";
+            String input = "{\"clientId\": \"" + clientId + "\",\"clientSecret\":\"" + clientSecret
+                    + "\",\"script\":\"" + script + "\",\"language\":\"" + "java" + "\",\"versionIndex\":\""
+                    + "0" + "\"} ";
 
             System.out.println(input);
 

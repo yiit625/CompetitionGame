@@ -15,10 +15,10 @@ public class DataController {
     MainService service;
 
     @PostMapping(value = "/online-editor")
-    public ResponsePayload create() {
+    public ResponsePayload onlineEditor(@RequestBody String script) {
 
         try {
-            service.onlineEditor();
+            service.onlineEditor(script);
             return new ResponsePayload(ResponseEnum.NOTFOUND, "Create is unsuccessfully");
         } catch (Exception ex) {
             return new ResponsePayload(ResponseEnum.INTERNAL_ERROR);
