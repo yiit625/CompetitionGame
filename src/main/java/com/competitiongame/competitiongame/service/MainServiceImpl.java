@@ -1,6 +1,7 @@
 package com.competitiongame.competitiongame.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +10,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ServiceImpl implements Service {
+@Service
+public class MainServiceImpl implements MainService {
 
     @Value("${spring.datasource.clientId}")
     private String clientId;
@@ -22,8 +24,7 @@ public class ServiceImpl implements Service {
     @Value("${spring.datasource.versionIndex}")
     private String versionIndex;
 
-    public void onlineEditor() {
-        try {
+    public void onlineEditor() throws IOException {
             System.out.println(clientId);
             System.out.println(clientSecret);
             System.out.println(script);
@@ -61,8 +62,5 @@ public class ServiceImpl implements Service {
 
             connection.disconnect();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
