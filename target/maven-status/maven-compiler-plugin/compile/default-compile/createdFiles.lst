@@ -1,0 +1,8 @@
+com\competitiongame\competitiongame\service\MainService.class
+com\competitiongame\competitiongame\service\MainServiceImpl.class
+com\competitiongame\competitiongame\config\ResponseEnum.class
+com\competitiongame\competitiongame\config\ResponsePayload.class
+com\competitiongame\competitiongame\CompetitionGameApplication.class
+com\competitiongame\competitiongame\controller\DataController.class
+com\competitiongame\competitiongame\entities\Task.class
+com\competitiongame\competitiongame\entities\Player.class
