@@ -61,14 +61,10 @@ public class ResponsePayload {
         this.message = message;
     }
 
-    public ResponsePayload(Object data){
+    public ResponsePayload(Object data) {
         super();
         this.data = data;
     }
-
-
-
-
 
     public ResponsePayload(ResponseEnum responseEnum, String message, Boolean success, Object data) {
         this(responseEnum);
