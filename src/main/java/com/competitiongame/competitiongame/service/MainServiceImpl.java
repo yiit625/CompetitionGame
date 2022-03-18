@@ -1,5 +1,6 @@
 package com.competitiongame.competitiongame.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 @Service
 public class MainServiceImpl implements MainService {
@@ -18,7 +20,7 @@ public class MainServiceImpl implements MainService {
     @Value("${spring.datasource.clientSecret}")
     private String clientSecret;
 
-    public void onlineEditor(String script) throws IOException {
+    public Map<String,Object> onlineEditor(String script) throws IOException {
             System.out.println(clientId);
             System.out.println(clientSecret);
             System.out.println(script);
@@ -29,9 +31,13 @@ public class MainServiceImpl implements MainService {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
 
-            String input = "{\"clientId\": \"" + clientId + "\",\"clientSecret\":\"" + clientSecret
-                    + "\",\"script\":\"" + script + "\",\"language\":\"" + "java" + "\",\"versionIndex\":\""
-                    + "0" + "\"} ";
+            String input =
+                    "{\"clientId\":" + clientId +
+                    ",\"clientSecret\":" + clientSecret +
+                    ",\"script\":\"" + script +
+                    "\",\"language\":\"" + "java" +
+                    "\",\"versionIndex\":\"" + "0" + "\"} ";
+
 
             System.out.println(input);
 
@@ -43,17 +49,16 @@ public class MainServiceImpl implements MainService {
                 throw new RuntimeException("Please check your inputs : HTTP error code : " + connection.getResponseCode());
             }
 
-            BufferedReader bufferedReader;
-            bufferedReader = new BufferedReader(new InputStreamReader(
-                    (connection.getInputStream())));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((connection.getInputStream())));
 
             String output;
             System.out.println("Output from JDoodle .... \n");
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String,Object> map = null;
             while ((output = bufferedReader.readLine()) != null) {
-                System.out.println(output);
+                map = mapper.readValue(output, Map.class);
             }
-
             connection.disconnect();
-
+            return map;
     }
 }

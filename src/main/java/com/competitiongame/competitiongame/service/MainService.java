@@ -1,7 +1,8 @@
 package com.competitiongame.competitiongame.service;
 
 import java.io.IOException;
+import java.util.Map;
 
 public interface MainService {
-    void onlineEditor(String script) throws IOException;
+    Map<String,Object> onlineEditor(String script) throws IOException;
 }
