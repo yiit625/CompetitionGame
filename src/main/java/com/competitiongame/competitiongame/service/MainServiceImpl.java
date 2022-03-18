@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -32,46 +34,46 @@ public class MainServiceImpl implements MainService {
     @Autowired
     TaskRepository taskRepository;
 
-    public Map<String,Object> onlineEditor(String script) throws IOException {
-            System.out.println(clientId);
-            System.out.println(clientSecret);
-            System.out.println(script);
+    public Map<String, Object> onlineEditor(String script) throws IOException {
+        System.out.println(clientId);
+        System.out.println(clientSecret);
+        System.out.println(script);
 
-            URL url = new URL("https://api.jdoodle.com/v1/execute");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
+        URL url = new URL("https://api.jdoodle.com/v1/execute");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
 
-            String input =
-                    "{\"clientId\":" + clientId +
-                    ",\"clientSecret\":" + clientSecret +
-                    ",\"script\":\"" + script +
-                    "\",\"language\":\"" + "java" +
-                    "\",\"versionIndex\":\"" + "0" + "\"} ";
+        String input =
+                "{\"clientId\":" + clientId +
+                        ",\"clientSecret\":" + clientSecret +
+                        ",\"script\":\"" + script +
+                        "\",\"language\":\"" + "java" +
+                        "\",\"versionIndex\":\"" + "0" + "\"} ";
 
 
-            System.out.println(input);
+        System.out.println(input);
 
-            OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(input.getBytes());
-            outputStream.flush();
+        OutputStream outputStream = connection.getOutputStream();
+        outputStream.write(input.getBytes());
+        outputStream.flush();
 
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Please check your inputs : HTTP error code : " + connection.getResponseCode());
-            }
+        if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            throw new RuntimeException("Please check your inputs : HTTP error code : " + connection.getResponseCode());
+        }
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((connection.getInputStream())));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((connection.getInputStream())));
 
-            String output;
-            System.out.println("Output from JDoodle .... \n");
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String,Object> map = null;
-            while ((output = bufferedReader.readLine()) != null) {
-                map = mapper.readValue(output, Map.class);
-            }
-            connection.disconnect();
-            return map;
+        String output;
+        System.out.println("Output from JDoodle .... \n");
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = null;
+        while ((output = bufferedReader.readLine()) != null) {
+            map = mapper.readValue(output, Map.class);
+        }
+        connection.disconnect();
+        return map;
     }
 
     @Override
@@ -85,19 +87,24 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public Player createPerson(String name, String selectedTaskId) {
+    public Player createPerson(String name, Integer selectedTaskId) {
         Player player = playerRepository.checkExist(name);
         if (player == null) {
             Player player1 = new Player();
             player1.setPlayerName(name);
-            player1.setTaskList(selectedTaskId);
+            List<Integer> selectedTaskList = new ArrayList<>();
+            selectedTaskList.add(selectedTaskId);
+            player1.setTaskList(selectedTaskList);
             playerRepository.save(player1);
             return player1;
         } else {
-            Player player1 = playerRepository.checkExist(name);
-            player1.setTaskList(selectedTaskId);
-            playerRepository.save(player1);
-            return player1;
+            List<Integer> selectedTaskList = player.getTaskList();
+            if (!selectedTaskList.contains(selectedTaskId)) {
+                selectedTaskList.add(selectedTaskId);
+            }
+            player.setTaskList(selectedTaskList);
+            playerRepository.save(player);
+            return player;
         }
     }
 }

@@ -4,7 +4,6 @@ import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 public interface MainService {
@@ -14,5 +13,5 @@ public interface MainService {
 
     Iterable<Player> getPlayerList();
 
-    Player createPerson(String name, String selectedTaskId);
+    Player createPerson(String name, Integer selectedTaskId);
 }

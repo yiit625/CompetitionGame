@@ -35,13 +35,13 @@ public class DataController {
         }
     }
 
-    @PostMapping(value = "/create-person")
-    public ResponsePayload onlineEditor(@RequestParam String name, @RequestParam String selectedTaskId) {
+    @PostMapping(value = "/create-person",  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponsePayload createPerson(@RequestParam String name, @RequestParam Integer selectedTaskId) {
 
         try {
             Player player =  service.createPerson(name, selectedTaskId);
             if (player != null) {
-                return new ResponsePayload(ResponseEnum.OK, player, player.getPlayerName() + " is created");
+                return new ResponsePayload(ResponseEnum.OK, player, " Create is successfully");
             }
             return new ResponsePayload(ResponseEnum.NOTFOUND, "There is mistake!");
         } catch (Exception ex) {
