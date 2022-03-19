@@ -1,5 +1,15 @@
 <d-layout class="layout-wrapper">
-  <d-header>Header</d-header>
-  <d-content>Content</d-content>
+  <d-header>COGNIZANT CHALLENGE
+    <d-button id="primaryBtn" style="margin-left: 1000px" (btnClick)="solve()">Solve</d-button>
+    <d-button id="primaryBtn2" style="margin-left: 8px" (btnClick)="top3()">TOP 3</d-button>
+  </d-header>
+  <d-content>
+    <div *ngIf="!showSelectedPage">
+      <app-submit-page></app-submit-page>
+    </div>
+    <div *ngIf="showSelectedPage">
+      <app-grid-page></app-grid-page>
+    </div>
+  </d-content>
   <d-footer>Footer</d-footer>
 </d-layout>

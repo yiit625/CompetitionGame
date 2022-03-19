@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'competition-game-ui';
+  showSelectedPage = false
+
+  solve() {
+    console.log("SOLVE")
+    this.showSelectedPage = false
+  }
+
+  top3() {
+    console.log("TOP3")
+    this.showSelectedPage = true
+  }
 }
