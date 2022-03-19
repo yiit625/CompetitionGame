@@ -34,7 +34,7 @@ public class MainServiceImpl implements MainService {
     @Autowired
     TaskRepository taskRepository;
 
-    public Map<String, Object> onlineEditor(String script) throws IOException {
+    public Map<String, Object> onlineEditor(String script, String inputParam) throws IOException {
 
         URL url = new URL("https://api.jdoodle.com/v1/execute");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -47,7 +47,7 @@ public class MainServiceImpl implements MainService {
                         ",\"clientSecret\":" + clientSecret +
                         ",\"script\":\"" + "public class MyClass{public static void main(String args[]){int x=Integer.valueOf(args[0]); int y=25; int z=x+y; System.out.println(z);}}" +
                         "\",\"language\":\"" + "java" +
-                        "\",\"args\":\"" + "10" +
+                        "\",\"args\":\"" + inputParam +
                         "\",\"versionIndex\":\"" + "0" + "\"} ";
 
 

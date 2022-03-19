@@ -21,10 +21,10 @@ public class DataController {
     MainService service;
 
     @PostMapping(value = "/online-editor")
-    public ResponsePayload onlineEditor(@RequestBody String script) {
+    public ResponsePayload onlineEditor(@RequestParam String script, @RequestParam String inputParam) {
 
         try {
-            Map<String,Object> output = service.onlineEditor(script);
+            Map<String,Object> output = service.onlineEditor(script, inputParam);
             if (output.get("statusCode").toString().equals("200")) {
                 return new ResponsePayload(ResponseEnum.OK, output, "Code is working successfully");
             }

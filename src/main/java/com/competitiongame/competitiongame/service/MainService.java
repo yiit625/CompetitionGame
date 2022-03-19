@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface MainService {
-    Map<String,Object> onlineEditor(String script) throws IOException;
+    Map<String,Object> onlineEditor(String script, String inputParam) throws IOException;
 
     Iterable<Task> getTaskList();
 
