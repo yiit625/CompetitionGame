@@ -24,4 +24,10 @@ public class Task implements Serializable {
 
     @Column(name = "task_description")
     private String taskDescription;
+
+    @Column(name = "test_input_parameter")
+    private String testInputParameter;
+
+    @Column(name = "test_output_parameter")
+    private String testOutputParameter;
 }
