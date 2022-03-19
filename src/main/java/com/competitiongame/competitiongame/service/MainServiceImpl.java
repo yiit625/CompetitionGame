@@ -105,4 +105,19 @@ public class MainServiceImpl implements MainService {
             return player;
         }
     }
+
+    @Override
+    public Player createPersonWithoutTaskId(String name) {
+        Player player = playerRepository.checkExist(name);
+        List<Integer> selectedTaskList = new ArrayList<>();
+        if (player == null) {
+            Player player1 = new Player();
+            player1.setPlayerName(name);
+            player1.setTaskList(selectedTaskList);
+            playerRepository.save(player1);
+            return player1;
+        } else {
+            return player;
+        }
+    }
 }

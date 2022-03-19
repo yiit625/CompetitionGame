@@ -48,6 +48,20 @@ public class DataController {
         }
     }
 
+    @PostMapping(value = "/create-person-without-taskid",  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponsePayload createPersonWithoutTaskId(@RequestParam String name) {
+
+        try {
+            Player player =  service.createPersonWithoutTaskId(name);
+            if (player != null) {
+                return new ResponsePayload(ResponseEnum.OK, player, " Create is successfully");
+            }
+            return new ResponsePayload(ResponseEnum.NOTFOUND, "There is mistake!");
+        } catch (Exception ex) {
+            return new ResponsePayload(ResponseEnum.INTERNAL_ERROR);
+        }
+    }
+
     @GetMapping(value = "/batch-people")
     public ResponsePayload batchPeople() {
 

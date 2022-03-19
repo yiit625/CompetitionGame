@@ -14,4 +14,7 @@ public interface MainService {
     Iterable<Player> getPlayerList();
 
     Player createPerson(String name, Integer selectedTaskId);
+
+    Player createPersonWithoutTaskId(String name);
+
 }
