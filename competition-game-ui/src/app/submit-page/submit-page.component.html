@@ -29,21 +29,16 @@
     <d-form-item>
       <d-form-label>Solution of Code</d-form-label>
       <d-form-control>
-        <textarea dTextarea name="desc2" maxlength="10000" style="height: 400px" (keydown.enter)="onKeydown($event)" [(ngModel)]="formData.script"></textarea>
+        <textarea dTextarea name="desc2" maxlength="10000" style="height: 400px" (keydown.enter)="onKeydown($event)"
+                  [(ngModel)]="formData.script"></textarea>
       </d-form-control>
     </d-form-item>
 
     <d-form-operation>
       <section>
-        <d-toast [value]="msgs"></d-toast>
-      <d-button bsStyle="primary" class="mr-element-spacing" circled="true" style="margin-right: 4px"
-                (btnClick)="submit()">Submit
-      </d-button>
+        <d-toast [life]="5000" [value]="msgs" [styleClass]="'custom-class'" [lifeMode]="'global'"></d-toast>
+        <d-button bsStyle="primary" style="margin-right: 4px" (btnClick)="submit()">Submit</d-button>
       </section>
     </d-form-operation>
-
-    <ng-template #customTemplate let-msg="msg">
-      <a class="devui-link" href="http://devui.huawei.com" target="_blank">Back to {{ msg.myInfo }} Home Page</a>
-    </ng-template>
   </form>
 </div>
