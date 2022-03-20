@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule, TemplateRef} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,6 +8,7 @@ import {DevUIModule, FormModule} from "ng-devui";
 import { GridPageComponent } from './grid-page/grid-page.component';
 import { SubmitPageComponent } from './submit-page/submit-page.component';
 import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     AppRoutingModule,
     BrowserAnimationsModule,
     DevUIModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
