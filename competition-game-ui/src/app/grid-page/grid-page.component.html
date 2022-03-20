@@ -10,7 +10,7 @@
   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
     <tr dTableRow>
       <td dTableCell class="mat-column-col1">{{ rowIndex + 1 }}</td>
-      <td dTableCell *ngFor="let colOption of dataTableOptions.columns">
+      <td dTableCell *ngFor="let colOption of dataTableOptions.columns" style="text-align: left">
         {{rowItem[colOption.field]}}
       </td>
     </tr>
