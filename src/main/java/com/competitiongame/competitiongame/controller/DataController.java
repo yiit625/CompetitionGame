@@ -5,11 +5,13 @@ import com.competitiongame.competitiongame.config.ResponsePayload;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 import com.competitiongame.competitiongame.service.MainService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -66,7 +68,7 @@ public class DataController {
     public ResponsePayload batchPeople() {
 
         try {
-            Iterable<Player> models = service.getPlayerList();
+            List<Player> models = service.getPlayerList();
             if (models != null)
                 return new ResponsePayload(ResponseEnum.OK, models, "Batch data is success");
             else

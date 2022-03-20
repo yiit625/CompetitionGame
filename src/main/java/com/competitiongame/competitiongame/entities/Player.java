@@ -43,4 +43,15 @@ public class Player implements Serializable {
         }
         return list;
     }
+
+    public int getTaskLength() {
+        List<Integer> list = new ArrayList<>();
+        if (!taskList.equals("")) {
+            String[] convertedRankArray = taskList.split(",");
+            for (String number : convertedRankArray) {
+                list.add(Integer.parseInt(number.trim()));
+            }
+        }
+        return list.size();
+    }
 }

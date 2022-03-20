@@ -16,8 +16,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class MainServiceImpl implements MainService {
@@ -80,8 +82,12 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public Iterable<Player> getPlayerList() {
-        return playerRepository.findAll();
+    public List<Player> getPlayerList() {
+
+        return playerRepository.playerList().stream()
+                .sorted(Comparator.comparing(Player::getTaskLength).reversed())
+                .limit(3)
+                .collect(Collectors.toList());
     }
 
     @Override
