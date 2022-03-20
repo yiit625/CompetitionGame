@@ -26,6 +26,10 @@ export class GridPageComponent implements OnInit {
       field: 'taskName',
       width: '20px'
     },
+    {
+      field: 'taskListLength',
+      width: '20px'
+    },
   ];
 
   dataTableOptions = {
@@ -39,6 +43,12 @@ export class GridPageComponent implements OnInit {
       {
         field: 'taskName',
         header: 'Success Solution of the Algorithms',
+        fieldType: 'text',
+        fixedLeft: '100px'
+      },
+      {
+        field: 'taskListLength',
+        header: 'Number of Task',
         fieldType: 'text',
         fixedLeft: '100px'
       },
