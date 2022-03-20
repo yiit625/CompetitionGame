@@ -47,58 +47,59 @@ export class SubmitPageComponent implements OnInit {
     selectValue: this.selectOptions[1]
   };
 
-  onKeydown(event: any){
+  onKeydown(event: any) {
     event.preventDefault();
   }
 
   submit() {
-    console.log(this.formData)
-    this.service.onlineEditor(this.formData.script).subscribe((result: any) => {
-      console.log(result);
-      const _result = JSON.parse(JSON.stringify(result))
-      if (_result.code === 200) {
-        this.msgs = [{severity: 'success', content: result.message}];
-        if (this.formData.selectValue.outputParam == _result.data.output) {
+    if (this.formData.inputValue === '') {
+      this.msgs = [{severity: 'error', content: 'Enter name please'},];
+    } else {
+      console.log(this.formData)
+      this.service.onlineEditor(this.formData.script).subscribe((result: any) => {
+        console.log(result);
+        const _result = JSON.parse(JSON.stringify(result))
+        if (_result.code === 200) {
+          this.msgs = [{severity: 'success', content: result.message}];
+          if (this.formData.selectValue.outputParam == _result.data.output) {
 
-          this.service.createPerson(this.formData.inputValue, this.formData.selectValue.id).subscribe((result3: any) => {
-            const _result3 = JSON.parse(JSON.stringify(result3))
-            if (_result3.code === 200) {
-              this.msgs = [
-                {severity: 'success', content: 'Person is created!'},
-                {severity: 'success', content: 'Code output is working!'}
-              ];
-            }
-            else {
-              this.msgs = [
-                {severity: 'error', content: 'Person is not created!'},
-                {severity: 'success', content: 'Code output is working!'}
-              ];
-            }
-          });
+            this.service.createPerson(this.formData.inputValue, this.formData.selectValue.id).subscribe((result3: any) => {
+              const _result3 = JSON.parse(JSON.stringify(result3))
+              if (_result3.code === 200) {
+                this.msgs = [
+                  {severity: 'success', content: 'Person is created!'},
+                  {severity: 'success', content: 'Code output is working!'}
+                ];
+              } else {
+                this.msgs = [
+                  {severity: 'error', content: 'Person is not created!'},
+                  {severity: 'success', content: 'Code output is working!'}
+                ];
+              }
+            });
 
+          } else {
+            this.service.createPersonWithoutTaskId(this.formData.inputValue).subscribe((result2: any) => {
+              const _result2 = JSON.parse(JSON.stringify(result2))
+              if (_result2.code === 200) {
+                this.msgs = [
+                  {severity: 'success', content: 'Person is created!'},
+                  {severity: 'error', content: 'Code output is wrong!'}
+                ];
+              } else {
+                this.msgs = [
+                  {severity: 'error', content: 'Person is not created!'},
+                  {severity: 'error', content: 'Code output is wrong!'}
+                ];
+              }
+            });
+
+          }
         } else {
-          this.service.createPersonWithoutTaskId(this.formData.inputValue).subscribe((result2: any) => {
-            const _result2 = JSON.parse(JSON.stringify(result2))
-            if (_result2.code === 200) {
-              this.msgs = [
-                {severity: 'success', content: 'Person is created!'},
-                {severity: 'error', content: 'Code output is wrong!'}
-              ];
-            }
-            else {
-              this.msgs = [
-                {severity: 'error', content: 'Person is not created!'},
-                {severity: 'error', content: 'Code output is wrong!'}
-              ];
-            }
-          });
-
+          this.msgs = [{severity: 'error', content: result.message}];
         }
-      } else {
-        this.msgs = [{severity: 'error', content: result.message}];
-      }
-    });
+      });
+    }
   }
-
 
 }
