@@ -2,7 +2,7 @@
   <form dForm [layout]="layoutDirection" ngForm>
 
     <d-form-item>
-      <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the plan name.'">Name</d-form-label>
+      <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the name of the player'">Name</d-form-label>
       <d-form-control>
         <div>
           <input dTextInput autocomplete="off" name="userName" [(ngModel)]="formData.inputValue"/>
@@ -21,8 +21,8 @@
     <d-form-item>
       <d-form-label>Description</d-form-label>
       <d-form-control>
-        <textarea dTextarea name="desc" maxlength="200" style="height: 80px"
-                  [(ngModel)]="formData.textareaValue"></textarea>
+        <textarea dTextarea name="desc" maxlength="200" [readOnly]="true"
+                  [(ngModel)]="formData.selectValue.description"></textarea>
       </d-form-control>
     </d-form-item>
 

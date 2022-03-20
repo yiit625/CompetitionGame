@@ -15,20 +15,28 @@ export class SubmitPageComponent implements OnInit {
 
   selectOptions = [{
     id: 1,
-    label: 'Option1'
+    label: 'Fibonacci Algorithm',
+    inputParams: '5',
+    outputParam: '5',
+    description: 'Fibonacci sequence characterized by the fact that every number after the first two is the sum of the two preceding ones'
   },
     {
       id: 2,
-      label: 'Option2'
+      label: 'Factorial Algorithm',
+      inputParams: '5',
+      outputParam: '120',
+      description: 'The factorial function (symbol: !) says to multiply all whole numbers from our chosen number down to 1.'
     },
     {
       id: 3,
-      label: 'Option3'
+      label: 'Exponential Algorithm',
+      inputParams: '5',
+      outputParam: '32',
+      description: 'The exponential function is a mathematical function denoted by x^{y}. Please think about x = 2.'
     }];
 
   formData = {
     inputValue: '',
-    textareaValue: '',
     script: '',
     selectValue: this.selectOptions[1]
   };
