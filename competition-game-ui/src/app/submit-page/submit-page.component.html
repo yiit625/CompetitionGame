@@ -1,1 +1,42 @@
-<p>submit-page works!</p>
+<div style="margin-left: 40px">
+  <form dForm [layout]="layoutDirection" ngForm>
+
+    <d-form-item>
+      <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'This is the plan name.'">Name</d-form-label>
+      <d-form-control>
+        <div>
+          <input dTextInput autocomplete="off" name="userName" [(ngModel)]="formData.inputValue"/>
+        </div>
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item>
+      <d-form-label [required]="true">Select</d-form-label>
+      <d-form-control>
+        <d-select [options]="selectOptions" name="select1" [filterKey]="'label'"
+                  [(ngModel)]="formData.selectValue"></d-select>
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item>
+      <d-form-label>Description</d-form-label>
+      <d-form-control>
+        <textarea dTextarea name="desc" maxlength="200" style="height: 80px"
+                  [(ngModel)]="formData.textareaValue"></textarea>
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-item>
+      <d-form-label>Solution of Code</d-form-label>
+      <d-form-control>
+        <textarea dTextarea name="desc2" maxlength="200" style="height: 80px" [(ngModel)]="formData.script"></textarea>
+      </d-form-control>
+    </d-form-item>
+
+    <d-form-operation>
+      <d-button bsStyle="primary" class="mr-element-spacing" circled="true" style="margin-right: 4px"
+                (btnClick)="submit()">Submit
+      </d-button>
+    </d-form-operation>
+  </form>
+</div>
