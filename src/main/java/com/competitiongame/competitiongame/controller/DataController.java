@@ -2,6 +2,7 @@ package com.competitiongame.competitiongame.controller;
 
 import com.competitiongame.competitiongame.config.ResponseEnum;
 import com.competitiongame.competitiongame.config.ResponsePayload;
+import com.competitiongame.competitiongame.dao.PlayerModel;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 import com.competitiongame.competitiongame.service.MainService;
@@ -68,7 +69,7 @@ public class DataController {
     public ResponsePayload batchPeople() {
 
         try {
-            List<Player> models = service.getPlayerList();
+            List<PlayerModel> models = service.getPlayerList();
             if (models != null)
                 return new ResponsePayload(ResponseEnum.OK, models, "Batch data is success");
             else

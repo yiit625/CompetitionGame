@@ -1,5 +1,6 @@
 package com.competitiongame.competitiongame.service;
 
+import com.competitiongame.competitiongame.dao.PlayerModel;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 
@@ -12,7 +13,7 @@ public interface MainService {
 
     Iterable<Task> getTaskList();
 
-    List<Player> getPlayerList();
+    List<PlayerModel> getPlayerList();
 
     Player createPerson(String name, Integer selectedTaskId);
 

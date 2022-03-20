@@ -1,5 +1,6 @@
 package com.competitiongame.competitiongame.service;
 
+import com.competitiongame.competitiongame.dao.PlayerModel;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 import com.competitiongame.competitiongame.repositories.PlayerRepository;
@@ -82,12 +83,30 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public List<Player> getPlayerList() {
-
-        return playerRepository.playerList().stream()
+    public List<PlayerModel> getPlayerList() {
+        List<Player> list = playerRepository.playerList().stream()
                 .sorted(Comparator.comparing(Player::getTaskLength).reversed())
                 .limit(3)
                 .collect(Collectors.toList());
+        List<PlayerModel> newList = new ArrayList<>();
+        for (Player player : list) {
+            PlayerModel playerModel = new PlayerModel();
+            playerModel.setPlayerName(player.getPlayerName());
+            playerModel.setTaskList(player.getTaskList());
+            playerModel.setId(player.getId());
+            playerModel.setTaskListLength(player.getTaskList().size());
+            List<String> taskNameList = new ArrayList<>();
+            if (player.getTaskList().contains(1))
+                taskNameList.add("Fibonacci Algorithm");
+            if (player.getTaskList().contains(2))
+                taskNameList.add("Factorial Algorithm");
+            if (player.getTaskList().contains(3))
+                taskNameList.add("Exponential Algorithm");
+            playerModel.setTaskName(taskNameList);
+            newList.add(playerModel);
+        }
+
+        return newList;
     }
 
     @Override

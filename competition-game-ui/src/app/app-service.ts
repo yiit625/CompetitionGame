@@ -21,4 +21,9 @@ export class AppService {
     return this.http.post<any>('http://localhost:8080/data/create-person-without-taskid', params)
   }
 
+  batchPeople() {
+    return this.http.get<any>('http://localhost:8080/data/batch-people')
+  }
+
+
 }
