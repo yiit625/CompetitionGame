@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AppService} from "../app-service";
-import { TableWidthConfig } from 'ng-devui/data-table';
+import { TableWidthConfig, DataTableModule } from 'ng-devui/data-table';
 
 @Component({
   selector: 'app-grid-page',
@@ -11,6 +11,7 @@ import { TableWidthConfig } from 'ng-devui/data-table';
 export class GridPageComponent implements OnInit {
 
   constructor(private service: AppService) { }
+  @ViewChild('datatable', {static: false}) dataTable: DataTableModule;
   basicDataSource=[]
   tableWidthConfig: TableWidthConfig[] = [
     {
@@ -32,12 +33,14 @@ export class GridPageComponent implements OnInit {
       {
         field: 'playerName',
         header: 'Name Of The Player',
-        fieldType: 'text'
+        fieldType: 'text',
+        fixedLeft: '100px'
       },
       {
         field: 'taskName',
         header: 'Success Solution of the Algorithms',
-        fieldType: 'text'
+        fieldType: 'text',
+        fixedLeft: '100px'
       },
     ]
   };

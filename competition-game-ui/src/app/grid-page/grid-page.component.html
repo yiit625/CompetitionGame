@@ -1,20 +1,32 @@
-<div style="margin-bottom: 200px">
-<d-data-table [dataSource]="basicDataSource" [scrollable]="true" [type]="'striped'">
+<div style="margin-bottom: 450px; margin-left: 80px; margin-right: 80px; margin-top: 100px">
+<d-data-table #datatable [dataSource]="basicDataSource" [type]="'striped'" [striped]="true">
   <thead dTableHead>
-  <tr dTableRow>
+  <tr dTableRow >
     <th dHeadCell>#</th>
-    <th dHeadCell *ngFor="let colOption of dataTableOptions.columns">{{ colOption.header }}</th>
+    <th dHeadCell *ngFor="let colOption of dataTableOptions.columns" >{{ colOption.header }}</th>
   </tr>
   </thead>
   <tbody dTableBody>
   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
     <tr dTableRow>
-      <td dTableCell>{{ rowIndex + 1 }}</td>
+      <td dTableCell class="mat-column-col1">{{ rowIndex + 1 }}</td>
       <td dTableCell *ngFor="let colOption of dataTableOptions.columns">
-        {{ colOption.fieldType === 'date' ? (rowItem[colOption.field]) : rowItem[colOption.field] }}
+        {{rowItem[colOption.field]}}
       </td>
     </tr>
   </ng-template>
   </tbody>
 </d-data-table>
+
+  <!--d-data-table #datatable [dataSource]="basicDataSource" [tableWidthConfig]="tableWidthConfig" [scrollable]="true" [type]="'striped'" [containFixHeaderHeight]="true">
+    <d-column field="$index" header="#" [width]="'50px'"></d-column>
+    <d-column
+      *ngFor="let colOption of dataTableOptions.columns"
+      [field]="colOption.field"
+      [header]="colOption.header"
+      [fieldType]="colOption.fieldType"
+      [width]="'150px'"
+    >
+    </d-column>
+  </d-data-table-->
 </div>

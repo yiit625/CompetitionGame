@@ -9,6 +9,8 @@ import { GridPageComponent } from './grid-page/grid-page.component';
 import { SubmitPageComponent } from './submit-page/submit-page.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { AlertModule } from 'ng-devui/alert';
+import { DataTableModule } from 'ng-devui/data-table';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserAnimationsModule,
     DevUIModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AlertModule,
+    DataTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
