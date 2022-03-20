@@ -23,33 +23,37 @@ export class SubmitPageComponent implements OnInit {
     id: 1,
     label: 'Fibonacci Algorithm',
     inputParams: '5',
-    outputParam: '5',
+    outputParam: '5\n',
     description: 'Fibonacci sequence characterized by the fact that every number after the first two is the sum of the two preceding ones'
   },
     {
       id: 2,
       label: 'Factorial Algorithm',
       inputParams: '5',
-      outputParam: '120',
+      outputParam: '120\n',
       description: 'The factorial function (symbol: !) says to multiply all whole numbers from our chosen number down to 1.'
     },
     {
       id: 3,
       label: 'Exponential Algorithm',
       inputParams: '5',
-      outputParam: '32',
+      outputParam: '32.0\n',
       description: 'The exponential function is a mathematical function denoted by x^{y}. Please think about x = 2.'
     }];
 
   formData = {
     inputValue: '',
-    script: '',
+    script: 'public class MyClass{ public static void main(String args[]){}}',
     selectValue: this.selectOptions[1]
   };
 
+  onKeydown(event: any){
+    event.preventDefault();
+  }
+
   submit() {
     console.log(this.formData)
-    this.service.onlineEditor(this.formData.script, this.formData.selectValue.inputParams).subscribe((result: any) => {
+    this.service.onlineEditor(this.formData.script).subscribe((result: any) => {
       console.log(result);
       const _result = JSON.parse(JSON.stringify(result))
       if (_result.code === 200) {

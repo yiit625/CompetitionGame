@@ -48,7 +48,7 @@ public class MainServiceImpl implements MainService {
         String input =
                 "{\"clientId\":" + clientId +
                         ",\"clientSecret\":" + clientSecret +
-                        ",\"script\":\"" + "public class MyClass{public static void main(String args[]){int x=Integer.valueOf(args[0]); int y=25; int z=x+y; System.out.println(z);}}" +
+                        ",\"script\":\"" + script +
                         "\",\"language\":\"" + "java" +
                         "\",\"args\":\"" + inputParam +
                         "\",\"versionIndex\":\"" + "0" + "\"} ";

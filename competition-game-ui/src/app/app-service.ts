@@ -6,9 +6,8 @@ export class AppService {
   constructor(private http: HttpClient) {
   }
 
-  onlineEditor(script: any, inputParams: any) {
-    let params = new HttpParams().set('script', script).set('inputParam', inputParams)
-    return this.http.post<any>('http://localhost:8080/data/online-editor', params)
+  onlineEditor(script: any) {
+    return this.http.post<any>('http://localhost:8080/data/online-editor', script)
   }
 
   createPerson(name: any, selectedTaskId: any) {
