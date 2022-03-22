@@ -1,18 +1,19 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormLayout} from 'ng-devui/form';
-import {AppService} from "../app-service";
+import {AppService, ScriptModel} from "../app-service";
 
 @Component({
   selector: 'app-submit-page',
   templateUrl: './submit-page.component.html',
   styleUrls: ['./submit-page.component.scss'],
-  providers: [AppService]
+  providers: [AppService, ScriptModel]
 })
 export class SubmitPageComponent implements OnInit {
   layoutDirection: FormLayout = FormLayout.Horizontal;
   @ViewChild('customTemplate') customTemplate: TemplateRef<any>;
   msgs: Array<Object> = [];
-
+  //(paste)="onKeydown($event)"
+  loading = false;
   constructor(private service: AppService) {
   }
 
@@ -52,51 +53,62 @@ export class SubmitPageComponent implements OnInit {
   }
 
   submit() {
+    this.loading = true;
     if (this.formData.inputValue === '') {
       this.msgs = [{severity: 'error', content: 'Enter name please'},];
+      this.loading = false;
     } else {
-      console.log(this.formData)
-      this.service.onlineEditor(this.formData.script).subscribe((result: any) => {
+      var model = new ScriptModel();
+      model.script = this.formData.script
+      if(this.formData.selectValue.id === 1) {
+        model.outputParams = ['5\n', '8\n', '13\n']
+      }
+      else if(this.formData.selectValue.id === 2) {
+        model.outputParams = ['120\n','720\n','5040\n']
+      }
+      else if(this.formData.selectValue.id === 3) {
+        model.outputParams = ['32.0\n','64.0\n','128.0\n']
+      }
+      this.service.onlineEditor(model).subscribe((result: any) => {
         console.log(result);
         const _result = JSON.parse(JSON.stringify(result))
         if (_result.code === 200) {
           this.msgs = [{severity: 'success', content: result.message}];
-          if (this.formData.selectValue.outputParam == _result.data.output) {
 
             this.service.createPerson(this.formData.inputValue, this.formData.selectValue.id).subscribe((result3: any) => {
               const _result3 = JSON.parse(JSON.stringify(result3))
               if (_result3.code === 200) {
                 this.msgs = [
                   {severity: 'success', content: 'Person is created!'},
-                  {severity: 'success', content: 'Code output is working!'}
+                  {severity: 'success', content: result.message}
                 ];
+                this.loading = false;
               } else {
                 this.msgs = [
-                  {severity: 'error', content: 'Person is not created!'},
-                  {severity: 'success', content: 'Code output is working!'}
+                  {severity: 'success', content: 'Person is not created'},
+                  {severity: 'success', content: result.message}
                 ];
+                this.loading = false;
               }
             });
 
-          } else {
-            this.service.createPersonWithoutTaskId(this.formData.inputValue).subscribe((result2: any) => {
-              const _result2 = JSON.parse(JSON.stringify(result2))
-              if (_result2.code === 200) {
-                this.msgs = [
-                  {severity: 'success', content: 'Person is created!'},
-                  {severity: 'error', content: 'Code output is wrong!'}
-                ];
-              } else {
-                this.msgs = [
-                  {severity: 'error', content: 'Person is not created!'},
-                  {severity: 'error', content: 'Code output is wrong!'}
-                ];
-              }
-            });
-
-          }
         } else {
-          this.msgs = [{severity: 'error', content: result.message}];
+          this.service.createPersonWithoutTaskId(this.formData.inputValue).subscribe((result2: any) => {
+            const _result2 = JSON.parse(JSON.stringify(result2))
+            if (_result2.code === 200) {
+              this.msgs = [
+                {severity: 'success', content: 'Person is created!'},
+                {severity: 'error', content: _result.message}
+              ];
+              this.loading = false;
+            } else {
+              this.msgs = [
+                {severity: 'error', content: 'Person is not created!'},
+                {severity: 'error', content: _result.message}
+              ];
+              this.loading = false;
+            }
+          });
         }
       });
     }

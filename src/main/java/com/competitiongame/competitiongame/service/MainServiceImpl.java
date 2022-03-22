@@ -1,6 +1,7 @@
 package com.competitiongame.competitiongame.service;
 
 import com.competitiongame.competitiongame.dao.PlayerModel;
+import com.competitiongame.competitiongame.dao.ScriptTestModel;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 import com.competitiongame.competitiongame.repositories.PlayerRepository;
@@ -37,8 +38,7 @@ public class MainServiceImpl implements MainService {
     @Autowired
     TaskRepository taskRepository;
 
-    public Map<String, Object> onlineEditor(String script, String inputParam) throws IOException {
-
+    public Map<String, Object> onlineEditor(ScriptTestModel model, String inputParam) throws IOException {
         URL url = new URL("https://api.jdoodle.com/v1/execute");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
@@ -48,7 +48,7 @@ public class MainServiceImpl implements MainService {
         String input =
                 "{\"clientId\":" + clientId +
                         ",\"clientSecret\":" + clientSecret +
-                        ",\"script\":\"" + script +
+                        ",\"script\":\"" + model.getScript() +
                         "\",\"language\":\"" + "java" +
                         "\",\"args\":\"" + inputParam +
                         "\",\"versionIndex\":\"" + "0" + "\"} ";
@@ -74,6 +74,7 @@ public class MainServiceImpl implements MainService {
             map = mapper.readValue(output, Map.class);
         }
         connection.disconnect();
+
         return map;
     }
 

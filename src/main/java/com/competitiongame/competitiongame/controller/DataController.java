@@ -3,6 +3,7 @@ package com.competitiongame.competitiongame.controller;
 import com.competitiongame.competitiongame.config.ResponseEnum;
 import com.competitiongame.competitiongame.config.ResponsePayload;
 import com.competitiongame.competitiongame.dao.PlayerModel;
+import com.competitiongame.competitiongame.dao.ScriptTestModel;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 import com.competitiongame.competitiongame.service.MainService;
@@ -12,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,16 +26,21 @@ public class DataController {
     MainService service;
 
     @PostMapping(value = "/online-editor")
-    public ResponsePayload onlineEditor(@RequestBody String script) {
-        String inputParam = "5";
+    public ResponsePayload onlineEditor(@RequestBody ScriptTestModel scriptTestModel) {
+        List<String> inputParam = new ArrayList<>();
+        inputParam.add("5");
+        inputParam.add("6");
+        inputParam.add("7");
         try {
-            Map<String,Object> output = service.onlineEditor(script, inputParam);
-            if (output.get("statusCode").toString().equals("200")) {
-                return new ResponsePayload(ResponseEnum.OK, output, "Code is working successfully");
+            for(int i=0 ; i < inputParam.size(); i++) {
+                Map<String,Object> output = service.onlineEditor(scriptTestModel, inputParam.get(i));
+                if (!scriptTestModel.getOutputParams().get(i).equals(output.get("output").toString())) {
+                    return new ResponsePayload(ResponseEnum.INTERNAL_ERROR, "Code is not working!");
+                }
             }
-            return new ResponsePayload(ResponseEnum.NOTFOUND, "Code is not working!");
+            return new ResponsePayload(ResponseEnum.OK, "Code is working successfully");
         } catch (Exception ex) {
-            return new ResponsePayload(ResponseEnum.INTERNAL_ERROR);
+            return new ResponsePayload(ResponseEnum.BADREQUEST);
         }
     }
 

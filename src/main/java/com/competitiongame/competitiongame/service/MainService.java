@@ -1,6 +1,7 @@
 package com.competitiongame.competitiongame.service;
 
 import com.competitiongame.competitiongame.dao.PlayerModel;
+import com.competitiongame.competitiongame.dao.ScriptTestModel;
 import com.competitiongame.competitiongame.entities.Player;
 import com.competitiongame.competitiongame.entities.Task;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MainService {
-    Map<String,Object> onlineEditor(String script, String inputParam) throws IOException;
+    Map<String,Object> onlineEditor(ScriptTestModel model, String inputParam) throws IOException;
 
     Iterable<Task> getTaskList();
 

@@ -30,14 +30,14 @@
       <d-form-label>Solution of Code</d-form-label>
       <d-form-control>
         <textarea dTextarea name="desc2" maxlength="10000" style="height: 400px" (keydown.enter)="onKeydown($event)"
-                  (paste)="onKeydown($event)" [(ngModel)]="formData.script"></textarea>
+                  [(ngModel)]="formData.script"></textarea>
       </d-form-control>
     </d-form-item>
 
     <d-form-operation>
       <section>
         <d-toast [life]="5000" [value]="msgs" [styleClass]="'custom-class'" [lifeMode]="'global'"></d-toast>
-        <d-button bsStyle="primary" style="margin-right: 4px" (btnClick)="submit()">Submit</d-button>
+        <d-button bsStyle="primary" style="margin-right: 4px" (btnClick)="submit()" [showLoading]="loading">Submit</d-button>
       </section>
     </d-form-operation>
   </form>

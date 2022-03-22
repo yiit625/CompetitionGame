@@ -6,8 +6,8 @@ export class AppService {
   constructor(private http: HttpClient) {
   }
 
-  onlineEditor(script: any) {
-    return this.http.post<any>('http://localhost:8080/data/online-editor', script)
+  onlineEditor(scriptModel: ScriptModel) {
+    return this.http.post<any>('http://localhost:8080/data/online-editor', scriptModel)
   }
 
   createPerson(name: any, selectedTaskId: any) {
@@ -25,4 +25,9 @@ export class AppService {
   }
 
 
+}
+
+export class ScriptModel {
+  script: string;
+  outputParams: string[];
 }
