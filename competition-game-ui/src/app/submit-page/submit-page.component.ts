@@ -73,20 +73,18 @@ export class SubmitPageComponent implements OnInit {
         console.log(result);
         const _result = JSON.parse(JSON.stringify(result))
         if (_result.code === 200) {
-          this.msgs = [{severity: 'success', content: result.message}];
-
             this.service.createPerson(this.formData.inputValue, this.formData.selectValue.id).subscribe((result3: any) => {
               const _result3 = JSON.parse(JSON.stringify(result3))
               if (_result3.code === 200) {
                 this.msgs = [
                   {severity: 'success', content: 'Person is created!'},
-                  {severity: 'success', content: result.message}
+                  {severity: 'success', content: _result.message}
                 ];
                 this.loading = false;
               } else {
                 this.msgs = [
                   {severity: 'success', content: 'Person is not created'},
-                  {severity: 'success', content: result.message}
+                  {severity: 'success', content: _result.message}
                 ];
                 this.loading = false;
               }
