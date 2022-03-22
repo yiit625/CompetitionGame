@@ -30,7 +30,7 @@
       <d-form-label>Solution of Code</d-form-label>
       <d-form-control>
         <textarea dTextarea name="desc2" maxlength="10000" style="height: 400px" (keydown.enter)="onKeydown($event)"
-                  [(ngModel)]="formData.script"></textarea>
+                  (paste)="onKeydown($event)" [(ngModel)]="formData.script"></textarea>
       </d-form-control>
     </d-form-item>
 
